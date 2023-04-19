@@ -8,13 +8,24 @@ namespace test_colors
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
+            Bitmap bp = new Bitmap("input.jpg");
 
-            
+            Console.ReadKey(true);
+            for (int i = 0; i < bp.Height; i++)
+            {
+                for (int j = 0; j < bp.Width; j++)
+                {
+                    Console.BackgroundColor = GetCC(bp.GetPixel(j,i));
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
 
-            Color color = Color.Firebrick;
 
-            Console.BackgroundColor = GetCC(color);
-            Console.Clear();
+            Color color = Color.YellowGreen;
+
+           // Console.BackgroundColor = GetCC(color);
+           // Console.Clear();
 
         }
 
