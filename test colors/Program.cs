@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
-using System.Drawing.Imaging;
+
+
 namespace test_colors
 {
     internal class Program
@@ -10,9 +11,18 @@ namespace test_colors
 
             
 
-            Color c = Color.Firebrick;
-            ConsoleColor wc=0;
-            
+            Color color = Color.Firebrick;
+
+            Console.BackgroundColor = GetCC(color);
+            Console.Clear();
+
+        }
+
+
+        public static ConsoleColor GetCC(Color c)
+        {
+            ConsoleColor wc = 0;
+
             Color[] rc = new Color[16];
 
             for (int i = 0; i < rc.Length; i++)
@@ -27,14 +37,14 @@ namespace test_colors
             for (int i = 0; i < scores.Length; i++)// v tomhle
             {
 
-                int scoreR = Math.Abs(rc[i].R-c.R);
-                int scoreG = Math.Abs(rc[i].G-c.G);
-                int scoreB = Math.Abs(rc[i].B-c.B);
-                scores[i] = scoreR+scoreG+scoreB;
-                
+                int scoreR = Math.Abs(rc[i].R - c.R);
+                int scoreG = Math.Abs(rc[i].G - c.G);
+                int scoreB = Math.Abs(rc[i].B - c.B);
+                scores[i] = scoreR + scoreG + scoreB;
+
             }
-            
-            
+
+
 
             int smallest = scores[0];
             for (int i = 0; i < scores.Length; i++)
@@ -48,12 +58,11 @@ namespace test_colors
             {
                 if (smallest == scores[i])
                 {
-                    wc= (ConsoleColor)i;
+                    wc = (ConsoleColor)i;
                     break;
                 }
             }
-            Console.BackgroundColor = wc;
-            Console.Clear();
+            return wc;
 
         }
     }
