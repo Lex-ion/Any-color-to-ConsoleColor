@@ -13,7 +13,7 @@ namespace test_colors
 
             while (true)
             {
-                Bitmap bp = new Bitmap("input.png");
+                Bitmap bp = new Bitmap("old_input.png");
 
                 Random random = new Random();
                 int offset = random.Next(17);
@@ -29,9 +29,9 @@ namespace test_colors
                     }
                     Console.WriteLine();
                 }
-
-                Console.ReadKey();
                 Console.WriteLine("\n\n\n");
+                Console.ReadKey();
+                
             }
 
         }
@@ -65,7 +65,7 @@ namespace test_colors
                  scoresG[i] = Math.Abs(rc[i].G - c.G);
                  scoresB[i] = Math.Abs(rc[i].B - c.B);
                 scoreHUE[i] = (int)Math.Abs(rc[i].GetHue() - c.GetHue());
-                saturation[i] =(int)Math.Abs(rc[i].GetSaturation() - c.GetSaturation());
+                saturation[i] =(int)Math.Abs(rc[i].GetSaturation() - c.GetSaturation()*5);
 
               if (scoresG[i] < 90)
               {
@@ -85,16 +85,17 @@ namespace test_colors
                 
              }
 
-             //blackbooster
-             if (c.B > 210 && c.R > 210 && c.G > 210 || Math.Abs(scoresB[0] - scoresG[0] - scoresR[0])<125)
-            {
-                scores[0] /= 3 ;
-                scores[8] /= 2;
-               
-                scores[14] *= 4; 
-                scores[6]*=4;
-            }
-                    
+            //blackbooster
+           
+            if (c.B > 210 && c.R > 210 && c.G > 210 || Math.Abs(scoresB[0] - scoresG[0] - scoresR[0])<30)
+           {
+               scores[0] /= 2 ;
+                scores[8] /= 2; 
+
+
+               scores[14] +=150+ scores[0]/2 + scores[14]/2; 
+               scores[6]+= 150+scores[0]/2 + scores[6] / 2;
+           }
 
 
 
@@ -121,7 +122,7 @@ namespace test_colors
             int index = 0;
             for (int i = 0; i < scores.Length; i++)
             {
-                if (scnd == scores[i] && Math.Abs(smallest - scnd) < 160)
+                if (scnd == scores[i] && Math.Abs(smallest - scnd) < 280)
                 {
                     wc[1] = (ConsoleColor)((i+offset)%16);
                     if (db > 0.5)
@@ -138,7 +139,8 @@ namespace test_colors
 
 
             }
-            
+            if (index > chars.Length - 1) index = chars.Length - 1;
+            if(index<0) index = 0;
             Console.BackgroundColor = wc[0];
             Console.ForegroundColor = wc[1];
             Console.Write(chars[index]);
