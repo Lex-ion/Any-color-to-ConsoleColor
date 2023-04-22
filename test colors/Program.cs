@@ -24,7 +24,7 @@ namespace test_colors
                 {
                     for (int j = 0; j < bp.Width; j++)
                     {
-                        GetCC(bp.GetPixel(j, i), offset, db);
+                        GetCC(bp.GetPixel(j, i), 0, 0);//def =0,0
 
                     }
                     Console.WriteLine();
@@ -67,12 +67,12 @@ namespace test_colors
                 scoreHUE[i] = (int)Math.Abs(rc[i].GetHue() - c.GetHue());
                 saturation[i] =(int)Math.Abs(rc[i].GetSaturation() - c.GetSaturation());
 
-              //  if (scoresG[i] > 90)
-              //  {
-              //      scoresG[i] /= 2;
-              //      scoresB[i] += scoresG[i] / 2; 
-              //      scoresR[i] += scoresG[i] / 2;
-              //  }
+              if (scoresG[i] < 90)
+              {
+                  scoresG[i] /= 2;
+                  scoresB[i] += scoresG[i] / 2; 
+                  scoresR[i] += scoresG[i] / 2;
+              }
                     
 
 
@@ -84,6 +84,19 @@ namespace test_colors
                  scores[10] /= 2;
                 
              }
+
+             //blackbooster
+             if (c.B > 210 && c.R > 210 && c.G > 210 || Math.Abs(scoresB[0] - scoresG[0] - scoresR[0])<125)
+            {
+                scores[0] /= 3 ;
+                scores[8] /= 2;
+               
+                scores[14] *= 4; 
+                scores[6]*=4;
+            }
+                    
+
+
 
             int smallest = scores[0];
             int scnd = scores[0];
@@ -108,7 +121,7 @@ namespace test_colors
             int index = 0;
             for (int i = 0; i < scores.Length; i++)
             {
-                if (scnd == scores[i] && Math.Abs(smallest - scnd) < 120)
+                if (scnd == scores[i] && Math.Abs(smallest - scnd) < 160)
                 {
                     wc[1] = (ConsoleColor)((i+offset)%16);
                     if (db > 0.5)
